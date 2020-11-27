@@ -1,0 +1,54 @@
+if (loginServiceAlone.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+android {
+    compileSdkVersion compile_Sdk_Version.toInteger()
+    buildToolsVersion build_Tools_Version.toString()
+
+    defaultConfig {
+        if (loginServiceAlone.toBoolean()) {
+            applicationId "com.wzy.loginservice"
+        }
+
+        minSdkVersion min_Sdk_Version.toInteger()
+        targetSdkVersion target_Sdk_Version.toInteger()
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main{
+            if (loginServiceAlone.toBoolean()) {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
+            }
+
+        }
+
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation project(path: ':baselib')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+}
